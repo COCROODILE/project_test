@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <form action="/login" id="f1">
+    <input type="text" name="user_name" id="">
+    <input type="password" name="password" id="">
+    <button type="submit">提交</button>
+  </form>
+  <script>
+    /* $('#f1').submit(function(e){
+      alert('监听到了表单的提交时间')
+      e.preventDefault()  //阻止表单的默认行为
+      var data=$(this).serialize()
+      console.log(data)
+    }) */
+
+    $('#f1').on('submit',function(e){
+      alert('监听到了表单的提交时间')
+      e.preventDefault()  //阻止表单的默认行为
+      var data=$(this).serialize()
+      console.log(data)
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+  <input type="file" id="file1">
+  <!-- 进度条 -->
+  <div class="progress" style="width:500px; margin:15px 10px;">
+    <div class="progress-bar progress-bar-striped active" 
+    style="width: 0%" id="percent">0%
+    </div>
+  </div>
+  <button id="btnUpload">上传文件</button><br />
+
+  <img src="" alt="" id="img" width="800">   <!-- 用于显示上传成功后的图片 -->
+  <script>
+    var btnUpload=document.querySelector('#btnUpload')
+    btnUpload.addEventListener('click',function(){
+      // 获取用户上传的文件列表
+      var files=document.querySelector('#file1').files
+      if(files.length<=0){
+        return alert('请选择要上传的文件')
+      }
+      // 向formdata中追加文件
+      var fd=new FormData()
+      fd.append('avatar',files[0])
+
+      var xhr=new XMLHttpRequest()
+
+      // 监听文件上传的进度
+      xhr.upload.onprogress=function(e){
+        if(e.lengthComputable){
+          // e.lengthComputable：可计算长度为true时才有进度条
+          // e.loaded：已加载完成的字节
+          // e.total：总共字节
+          var procentComplete=Math.ceil((e.loaded/e.total)*100)
+          // console.log(procentComplete);
+          //动态设置进度条
+          $('#percent').attr('style','width:'+procentComplete+'%').html(procentComplete+'%')
+        }
+      }
+      xhr.upload.onload=function(){
+        // 设置请求成功后进度条的样式 先清空所有样式再添加
+        $('#percent').removeClass().addClass('progress-bar progress-bar-success')
+      }
+      xhr.open('POST','http://www.liulongbin.top:3006/api/upload/avatar')
+      xhr.send(fd)
+      xhr.onreadystatechange=function(){
+        if(xhr.readyState===4&&xhr.status===200){
+          var data=JSON.parse(xhr.responseText)
+          if(data.status===200){
+            document.querySelector('#img').src='http://www.liulongbin.top:3006'+data.url
+          }else{  
+            alert('图片上传失败'+data.message)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form id="form1">
+    <!-- autocomplete="off" 阻止自动填充 -->
+    <input type="text" name="uname" autocomplete="off" id="">
+    <input type="password" name="pwd" id="">
+    <button type="submit">提交</button>
+  </form>
+  <script>
+    // 使用fromdata获取表单中的数据
+    var form=document.querySelector('#form1')
+    form.addEventListener('submit',function(e){
+      e.preventDefault()  //阻止表单默认提交行为
+      var fd=new FormData(form) //自动获取form中的内容
+      var xhr=new XMLHttpRequest()
+      xhr.open('POST','http://www.liulongbin.top:3006/api/formdata')
+      xhr.send(fd)
+      xhr.onreadystatechange=function(){
+        if(xhr.readyState===4&&xhr.status===200){
+          console.log(JSON.parse(xhr.responseText));
+        }
+      }
+    })
+  </script>
+  <script>
+    // 创建formdata实例
+    /* var fd=new FormData()
+    // 追加数据
+    fd.append('uname','zhangsan')
+    fd.append('upwd','123')
+
+    var xhr=new XMLHttpRequest
+    xhr.open('POST','http://www.liulongbin.top:3006/api/formdata')
+    xhr.send(fd)
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState===4&&xhr.status===200){
+        console.log(JSON.parse(xhr.responseText));
+      }
+    } */
+
+
+  </script>
+</body>
+</html>

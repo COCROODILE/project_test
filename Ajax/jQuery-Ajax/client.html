@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 发送 Ajax 请求</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-header">jQuery发送Ajax请求</h2>
+        <button class="btn btn-primary">GET</button>
+        <button class="btn btn-danger">POST</button>
+        <button class="btn btn-info">通用型方法ajax</button>
+        <button  class="btn btn-primary">GET(不带参数)</button>
+        <button  class="btn btn-primary">GET(带参数)</button>
+        <button class="btn btn-danger">POST</button>
+        <button class="btn btn-info">ajax发起get请求</button>
+        <button class="btn btn-info">ajax发起post请求</button>
+
+
+    </div>
+    <script>
+        $('button').eq(0).click(function(){
+            $.get('http://127.0.0.1:8000/jquery-server',{a:100,b:2000},function(data){
+                console.log(data);
+            },'json')
+        })
+        $('button').eq(1).click(function(){
+            $.post('http://127.0.0.1:8000/jquery-server',{a:100,b:2000},function(data){
+                console.log(data);
+            })
+        })
+        $('button').eq(2).click(function(){
+            $.ajax({
+                url:'http://127.0.0.1:8000/jquery-server',
+                data:{
+                    a:100,
+                    b:200
+                },
+                type:'GET',
+                dataType:'json',    //自动转化为对象
+                success:function(data){
+                    console.log(data);
+                },
+                timeout:2000,
+                error:function(){
+                    console.log('出错啦');
+                },
+                headers:{
+                    c:300,
+                    d:400
+                }
+            })
+        })
+        $('button').eq(3).click(function(){
+            $.get('http://www.liulongbin.top:3006/api/getbooks',function(res){
+                console.log(res);
+            })
+        })
+        $('button').eq(4).click(function(){
+            $.get('http://www.liulongbin.top:3006/api/getbooks',{id:1},function(res){
+                console.log(res);
+            })
+        })
+        $('button').eq(5).click(function(){
+            $.post('http://www.liulongbin.top:3006/api/addbook',{bookname:'水浒传',author:"施耐庵",publisher:'天津图书馆'},function(res){
+                console.log(res);
+            })
+        })
+        $('button').eq(6).click(function(){
+            $.ajax({
+                type:'GET',
+                url:'http://www.liulongbin.top:3006/api/getbooks',
+                data:{
+                    id:1
+                },
+                success:function(res){
+                    console.log(res);
+                }
+            })
+        })
+        $('button').eq(7).click(function(){
+            $.ajax({
+                type:'POST',
+                url:'http://www.liulongbin.top:3006/api/addbook',
+                data:{
+                    bookname:'史记',
+                    author:'司马迁',
+                    publisher:'上海图书出版社'
+                },
+                success:function(res){
+                    console.log(res);
+                }
+            })
+        })
+    </script>
+</body>
+</html>

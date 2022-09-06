@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script src="https://cdn.bootcdn.net/ajax/libs/art-template/4.13.2/index.js"></script> -->
+  <script src="../template-web.js"></script>
+  <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+  <div id="container"></div>
+  <script type="text/html" id="tmp">
+    <h1>{{name}}---{{age}}---{{@test}}</h1>
+    //<!-- 条件 -->
+    <div>
+      {{if flag===0}}
+        flag=0
+      {{else if flag===1}}
+        flag=1
+      {{/if}}
+    </div>
+    //循环
+    <ul>
+      {{each hobby}}
+        <li>索引是：{{$index}}，循环项是:{{$value}}</li>
+      {{/each}}
+    </ul>
+    //<!-- 过滤器 -->
+    <h3>{{regTime | dateFormat}}</h3>
+  </script>
+  <script>
+    template.defaults.imports.dateFormat=function(date){
+      var y= date.getFullYear()
+      var m=date.getMonth()+1
+      var d=date.getDate()
+      return y+'-'+m+'-'+d
+    }
+    var data={
+      name:'zhangsan',
+      age:20,
+      test:'<h3>测试原文输出</h3>',
+      flag:0,
+      hobby:['eat','sleep','play'],
+      regTime:new Date()
+    }
+    var htmlStr=template('tmp',data)
+    console.log(htmlStr);
+    $('#container').html(htmlStr)
+  </script>
+</body>
+</html>

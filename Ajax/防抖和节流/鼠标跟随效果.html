@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #angel {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 防抖：回城，被打断就重新读条； 节流：技能CD，CD时间没好怎么触发也放不出技能 -->
+  <img src="./images/angel.gif" id="angel" alt="">
+  <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      var angel = $('#angel')
+      // 定义节流阀
+      var timer = null
+      $(document).on('mousemove', function (e) {
+        // 判断节流阀是否为空，如果不为空，则return出去
+        // 如果不为空,则证明节流阀正在进行其他操作，没有必要接下来的节流操作
+        if (timer) {
+          // console.log(null===true);
+          return
+        }
+        // 开启延时器
+        timer = setTimeout(function () {
+          angel.css('top', e.pageY + 'px').css('left', e.pageX + 'px')
+          timer = null  //操作结束后清空timer，方便下一次操作
+        }, 16)
+      })
+    })
+  </script>
+</body>
+
+</html>
